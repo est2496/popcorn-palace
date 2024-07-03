@@ -61,7 +61,6 @@ pyproject_hooks==1.1.0
 pyrsistent==0.20.0
 python-dateutil==2.9.0.post0
 pytz==2024.1
-pywin32==306
 pyzmq==26.0.3
 regex==2024.5.15
 requests==2.31.0
