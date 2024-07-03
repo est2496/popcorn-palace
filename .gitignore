@@ -1,0 +1,79 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+*.egg
+*.egg-info/
+dist/
+build/
+eggs/
+parts/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.coverage
+.coverage.*
+.cache
+nosetests.xml
+coverage.xml
+*.cover
+*.py,cover
+.hypothesis/
+.pytest_cache/
+*.mocha_cache/
+
+# Translations
+*.pot
+
+# Flask stuff:
+instance/
+.webassets-cache
+
+# SQLite database file
+*.sqlite3
+*.db
+
+# dotenv
+.env
+
+# Virtual environment
+.venv
+venv/
+ENV/
+env/
+env.bak/
+venv.bak/
+
+# Ignore compiled model files
+*.h5
+*.pkl
+
+# Static assets
+static/posters/
+static/css/
+static/js/
+static/images/
+
+# Logs
+*.log
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Node.js dependencies
+node_modules/

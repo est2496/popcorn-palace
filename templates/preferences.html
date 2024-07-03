@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>User Preferences</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/preferences.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap" rel="stylesheet">
+</head>
+<body style="background: url('{{ background_poster_url }}') no-repeat center center fixed; background-size: cover;">
+    <div class="preferences-content">
+        <header class="preferences-header" style="background: url('{{ url_for('static', filename='images/header.png') }}') no-repeat center center/cover; background-size: cover;">
+            <h1>Set Your Preferences</h1>
+        </header>
+        <form id="preferences-form" action="{{ url_for('main.save_preferences') }}" method="post">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+            
+            <div class="checkbox-group">
+                <div class="checkbox-container">
+                    <div class="checkbox-wrapper-24">
+                        <input type="checkbox" id="genre-action" name="genre" value="Action">
+                        <label for="genre-action"><span></span>Action</label>
+                    </div>
+                    <div class="checkbox-wrapper-24">
+                        <input type="checkbox" id="genre-comedy" name="genre" value="Comedy">
+                        <label for="genre-comedy"><span></span>Comedy</label>
+                    </div>
+                    <div class="checkbox-wrapper-24">
+                        <input type="checkbox" id="genre-drama" name="genre" value="Drama">
+                        <label for="genre-drama"><span></span>Drama</label>
+                    </div>
+                    <div class="checkbox-wrapper-24">
+                        <input type="checkbox" id="genre-tv-movie" name="genre" value="TV Movie">
+                        <label for="genre-tv-movie"><span></span>TV Movie</label>
+                    </div>
+                    <div class="checkbox-wrapper-24">
+                        <input type="checkbox" id="genre-adventure" name="genre" value="Adventure">
+                        <label for="genre-adventure"><span></span>Adventure</label>
+                    </div>
+                    <div class="checkbox-wrapper-24">
+                        <input type="checkbox" id="genre-history" name="genre" value="History">
+                        <label for="genre-history"><span></span>History</label>
+                    </div>
+                    <div class="checkbox-wrapper-24">
+                        <input type="checkbox" id="genre-documentary" name="genre" value="Documentary">
+                        <label for="genre-documentary"><span></span>Documentary</label>
+                    </div>
+                    <div class="checkbox-wrapper-24">
+                        <input type="checkbox" id="genre-romance" name="genre" value="Romance">
+                        <label for="genre-romance"><span></span>Romance</label>
+                    </div>
+                    <div class="checkbox-wrapper-24">
+                        <input type="checkbox" id="genre-music" name="genre" value="Music">
+                        <label for="genre-music"><span></span>Music</label>
+                    </div>
+                    <div class="checkbox-wrapper-24">
+                        <input type="checkbox" id="genre-thriller" name="genre" value="Thriller">
+                        <label for="genre-thriller"><span></span>Thriller</label>
+                    </div>
+                    <div class="checkbox-wrapper-24">
+                        <input type="checkbox" id="genre-horror" name="genre" value="Horror">
+                        <label for="genre-horror"><span></span>Horror</label>
+                    </div>
+                    <div class="checkbox-wrapper-24">
+                        <input type="checkbox" id="genre-crime" name="genre" value="Crime">
+                        <label for="genre-crime"><span></span>Crime</label>
+                    </div>
+                    <div class="checkbox-wrapper-24">
+                        <input type="checkbox" id="genre-mystery" name="genre" value="Mystery">
+                        <label for="genre-mystery"><span></span>Mystery</label>
+                    </div>
+                    <div class="checkbox-wrapper-24">
+                        <input type="checkbox" id="genre-family" name="genre" value="Family">
+                        <label for="genre-family"><span></span>Family</label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="preferences-button-group">
+                <button class="button-77" role="button">Save Preferences</button>
+                <a href="{{ url_for('main.home') }}" id="skip-link" class="btn preferences-btn">Skip</a>
+            </div>
+        </form>
+    </div>
+    <script src="{{ url_for('static', filename='js/preferences.js') }}"></script>
+</body>
+</html>

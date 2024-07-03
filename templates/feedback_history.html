@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Feedback History</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800&display=swap" rel="stylesheet">
+</head>
+<body style="background: url('{{ background_poster_url }}') no-repeat center center fixed; background-size: cover;">
+    <header class="nav-bar">
+        <div class="user-profile">
+            <img src="{{ profile_picture }}" alt="Profile Picture" class="profile-pic">
+            <span>{{ user }}</span>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('main.home') }}">Home</a></li>
+                <li><a href="{{ url_for('main.rating_history') }}">Rating History</a></li>
+                <li><a href="{{ url_for('main.preferences') }}">Update Preferences</a></li>
+                <li><a href="{{ url_for('main.settings') }}">Settings</a></li>
+                <li><a href="{{ url_for('main.logout') }}">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="content">
+        <h1>Your Feedback History</h1>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Movie Title</th>
+                    <th>Feedback</th>
+                    <th>Timestamp</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for feedback in feedbacks %}
+                <tr>
+                    <td>{{ feedback.movie_title }}</td>
+                    <td>{{ feedback.feedback }}</td>
+                    <td>{{ feedback.timestamp }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <footer>
+        <p>Copyright © Popcorn Palace. 2024 All Rights Reserved</p>
+    </footer>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

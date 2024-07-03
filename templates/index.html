@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Popcorn Palace</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900&display=swap" rel="stylesheet">
+</head>
+<body style="background: url('{{ background_poster_url }}') no-repeat center center fixed; background-size: cover;"> 
+	<header class="nav-bar">
+        <div class="logo-container">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Popcorn Palace Logo" class="logo">
+            <span>Welcome to Popcorn Palace, {{ user }}!</span>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('main.home') }}">Home</a></li>
+                <li><a href="{{ url_for('main.rating_history') }}">Rating History</a></li>
+				<li><a href="{{ url_for('main.feedback_history') }}">Feedback History</a></li>
+                <li><a href="{{ url_for('main.preferences') }}">Update Preferences</a></li>
+                <li><a href="{{ url_for('main.settings') }}">Settings</a></li>
+                <li><a href="{{ url_for('main.logout') }}">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+	<div class="content">
+        <div id="search-area">
+            <form id="search-form" method="post" action="{{ url_for('main.search_movies') }}">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <input type="text" id="search-input" name="query" placeholder="Search movies...">
+                <button type="submit">Search</button>
+            </form>
+        </div>
+
+        <div id="top-movies">
+            <h2>Top Trending Movies</h2>
+            <div class="carousel">
+                <div class="carousel__container">
+                    {% for movie in top_movies %}
+                    <div class="carousel__slide" data-movie-id="{{ movie['tmdbID'] }}" data-movie-title="{{ movie['movie_title'] }}">
+                        <img src="{{ movie.poster_url }}" alt="{{ movie.movie_title }}" class="movie-posters" data-tmdbid="{{ movie['tmdbID'] }}" data-title="{{ movie['movie_title'] }}">
+						
+                    </div>
+                    {% endfor %}
+                </div>
+                <button class="carousel__prev" aria-label="Previous slide">&#10094;</button>
+                <button class="carousel__next" aria-label="Next slide">&#10095;</button>
+            </div>
+        </div>
+
+        <div id="recommended-movies">
+            <h2>Recommended Movies for You</h2>
+            {% if recommended_movies %}
+                {% for genre, movies in recommended_movies.items() %}
+                <div class="genre-section">
+                    <h3>{{ genre | capitalize }}</h3>
+                    <div class="carousel">
+                        <div class="carousel__container">
+                            {% for movie in movies %}
+                            <div class="carousel__slide" data-movie-id="{{ movie.tmdbID }}" data-movie-title="{{ movie.movie_title }}">
+                                <img src="{{ movie.poster_url }}" alt="{{ movie.movie_title }}" class="movie-posters" data-tmdbid="{{ movie.tmdbID }}" data-title="{{ movie.movie_title }}">
+								
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <button class="carousel__prev" aria-label="Previous slide">&#10094;</button>
+                        <button class="carousel__next" aria-label="Next slide">&#10095;</button>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <p>No movies available. Please select your preferences to see recommendations!</p>
+            {% endif %}
+        </div>
+
+        <div id="collaborative-recommendations">
+            <h2>Based on Your Recent Ratings</h2>
+            {% if collaborative_recommendations %}
+            <div class="carousel">
+                <div class="carousel__container">
+                    {% for movie in collaborative_recommendations %}
+                    <div class="carousel__slide" data-movie-id="{{ movie.tmdbID }}" data-movie-title="{{ movie.movie_title }}">
+                        <img src="{{ movie.poster_url }}" alt="{{ movie.movie_title }}" class="movie-posters" data-tmdbid="{{ movie.tmdbID }}" data-title="{{ movie.movie_title }}">
+						
+                    </div>
+                    {% endfor %}
+                </div>
+                <button class="carousel__prev" aria-label="Previous slide">&#10094;</button>
+                <button class="carousel__next" aria-label="Next slide">&#10095;</button>
+            </div>
+            {% else %}
+            <p>No movies available at the moment. Rate more to get personalized recommendations!</p>
+            {% endif %}
+        </div>
+
+        <div id="cnn-recommendations">
+            <h2>Movies you may like</h2>
+            {% if cnn_recommendations %}
+            <div class="carousel">
+                <div class="carousel__container">
+                    {% for movie in cnn_recommendations %}
+                    <div class="carousel__slide" data-movie-id="{{ movie.tmdbID }}" data-movie-title="{{ movie.movie_title }}">
+                        <img src="{{ movie.poster_url }}" alt="{{ movie.movie_title }}" class="movie-posters" data-tmdbid="{{ movie.tmdbID }}" data-title="{{ movie.movie_title }}">
+						
+                    </div>
+                    {% endfor %}
+                </div>
+                <button class="carousel__prev" aria-label="Previous slide">&#10094;</button>
+                <button class="carousel__next" aria-label="Next slide">&#10095;</button>
+            </div>
+            {% else %}
+            <p>No recommendations available!</p>
+            {% endif %}
+        </div>
+
+        <footer>
+            <p>Copyright © Popcorn Palace. 2024 All Rights Reserved</p>
+        </footer>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

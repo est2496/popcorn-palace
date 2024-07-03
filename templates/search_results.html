@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Search Results - Popcorn Palace</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800&display=swap" rel="stylesheet">
+</head>
+<body style="background: url('{{ background_poster_url }}') no-repeat center center fixed; background-size: cover;">
+    <header class="nav-bar">
+        <div class="user-profile">
+            <img src="{{ profile_picture }}" alt="Profile Picture" class="profile-pic">
+            <span>{{ user }}</span>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="{{ url_for('main.home') }}">Home</a></li>
+                <li><a href="{{ url_for('main.rating_history') }}">Rating History</a></li>
+				<li><a href="{{ url_for('main.feedback_history') }}">Feedback History</a></li>
+                <li><a href="{{ url_for('main.preferences') }}">Update Preferences</a></li>
+                <li><a href="{{ url_for('main.settings') }}">Settings</a></li>
+                <li><a href="{{ url_for('main.logout') }}">Logout</a></li>
+            </ul>
+        </nav>
+    </header>
+    <div class="content">
+        <div id="search-area">
+            <form id="search-form" method="post" action="{{ url_for('main.search_movies') }}">
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                <input type="text" id="search-input" name="query" placeholder="Search for more movies...">
+                <button type="submit">Search</button>
+            </form>
+        </div>
+        <h2>Search Results</h2>
+        <div class="search-results">
+            {% if movies %}
+                {% for movie in movies %}
+                    <div class="search-result">
+                        <div class="movie-poster-container">
+                            <img src="{{ movie.poster_url }}" alt="{{ movie.movie_title }}" class="movie-poster">
+                        </div>
+                        <div class="movie-details">
+                            <h3>{{ movie.movie_title }}</h3>
+                            <p>Genre: {{ movie.genre }}</p>
+                            <p>Release Date: {{ movie.release_date }}</p>
+                            <p>Rating: {{ movie.vote_average }}</p>
+                            <p>{{ movie.overview }}</p>
+                            <p>Director: {{ movie.director }}</p>
+                            <p>Cast: {{ movie.cast }}</p>
+                            <button class="btn rate-button" data-movie-id="{{ movie.tmdbID }}" data-movie-title="{{ movie.movie_title }}">Rate</button>
+                            <div class="rating-form" id="rating-form-{{ movie.tmdbID }}">
+                                <span class="close-button" onclick="closeForm('rating-form-{{ movie.tmdbID }}')">&times;</span>
+                                <form action="{{ url_for('main.rate_movies') }}" method="POST" data-movie-title="{{ movie.movie_title }}">
+                                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                    <label for="rating">Rate this movie:</label>
+                                    <input type="hidden" name="tmdbID" value="{{ movie.tmdbID }}">
+                                    <select name="rating" id="rating">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3">3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                        <option value="10">10</option>
+                                    </select>
+                                    <button type="submit">Submit</button>
+                                </form>
+                            </div>
+                            <div class="message-container" id="message-container-{{ movie.tmdbID }}">
+                                <div class="success-message" style="display:none;">Rating submitted successfully!</div>
+                                <div class="error-message" style="display:none;">Failed to submit rating. Please try again.</div>
+                                <div class="popup-container"></div>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>Sorry, the movie is not in our database!</p>
+            {% endif %}
+        </div>
+        <footer>
+            <p>Copyright © Popcorn Palace. 2024 All Rights Reserved</p>
+        </footer>
+    </div>
+    <script src="{{ url_for('static', filename='js/rate.js') }}"></script>
+</body>
+</html>
